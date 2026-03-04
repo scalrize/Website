@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meridian — Bank today. Better tomorrow.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:   #141414;
+      --white:   #ffffff;
+      --accent:  #e4fe00;
+      --cream:   #eeeceb;
+      --bg-gray: #f7f7f7;
+      --text-secondary: #666666;
+      --text-muted: #9c9c9c;
+      --border:  #e8e8e8;
+      --trustpilot: #00b67a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .logo-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: rgba(0,0,0,0.55);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    .btn {
+      display: inline-block;
+      padding: 9px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .btn:hover { opacity: 0.88; transform: scale(1.02); }
+
+    .btn-accent { background: var(--accent); color: var(--black); }
+    .btn-lg     { padding: 12px 26px; font-size: 14px; }
+
+    /* ─── HERO ─────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=80') center / cover no-repeat;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.72) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 580px;
+      padding: 0 24px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(44px, 7vw, 76px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .hero-content p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.55;
+      margin-bottom: 28px;
+      max-width: 380px;
+      margin-inline: auto;
+    }
+
+    .hero-bottom {
+      position: absolute;
+      bottom: 28px;
+      left: 48px;
+      right: 48px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trustpilot-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .tp-stars {
+      display: flex;
+      gap: 2px;
+    }
+
+    .tp-star {
+      width: 18px;
+      height: 18px;
+      background: var(--trustpilot);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .hero-partners {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .hero-partner {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .appstore-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 9px;
+      padding: 7px 13px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .appstore-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ─── MARQUEE ──────────────────────────────────────────────── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 14px 0;
+      background: var(--white);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      animation: scroll-left 28s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #bbb;
+      flex-shrink: 0;
+    }
+
+    .marquee-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 4px;
+      opacity: 0.6;
+    }
+
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-100%); }
+    }
+
+    /* ─── SECTIONS ─────────────────────────────────────────────── */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 48px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .two-col.flip { direction: rtl; }
+    .two-col.flip > * { direction: ltr; }
+
+    .feature-text h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      margin-bottom: 14px;
+    }
+
+    .feature-text p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 360px;
+    }
+
+    .feature-img {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--cream);
+    }
+
+    .feature-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ─── CALCULATOR ───────────────────────────────────────────── */
+    .calc-right h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+
+    .calc-right > .sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      max-width: 360px;
+    }
+
+    .calc-card {
+      background: var(--bg-gray);
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .calc-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .calc-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .toggle {
+      display: flex;
+      background: #e2e2e2;
+      border-radius: 100px;
+      padding: 3px;
+    }
+
+    .toggle button {
+      border: none;
+      background: none;
+      padding: 5px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .toggle button.active {
+      background: var(--white);
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    .calc-amount {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin: 8px 0 16px;
+    }
+
+    .calc-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: #d8d8d8;
+      outline: none;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .calc-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--black);
+      cursor: pointer;
+    }
+
+    .calc-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar-name {
+      font-size: 12px;
+      font-weight: 600;
+      width: 58px;
+      flex-shrink: 0;
+      text-transform: lowercase;
+    }
+
+    .bar-apy {
+      font-size: 10px;
+      color: var(--text-muted);
+      padding-left: 68px;
+      margin-top: -6px;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 7px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    .bar-earn {
+      font-size: 12px;
+      font-weight: 600;
+      width: 38px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ─── SOCIAL PROOF ─────────────────────────────────────────── */
+    .social-proof {
+      background: var(--bg-gray);
+      padding: 64px 48px;
+      text-align: center;
+    }
+
+    .sp-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .sp-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 52px;
+      flex-wrap: wrap;
+    }
+
+    .sp-logo {
+      font-size: 19px;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: -0.02em;
+    }
+
+    .sp-logo.serif { font-style: italic; }
+
+    /* ─── FAQ ──────────────────────────────────────────────────── */
+    .faq-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .faq-left h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      margin-bottom: 24px;
+    }
+
+    .faq-list { list-style: none; }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .faq-q:hover { color: #444; }
+
+    .faq-ico {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: transform 0.25s, border-color 0.2s;
+      line-height: 1;
+    }
+
+    .faq-item.open .faq-ico { transform: rotate(45deg); border-color: #888; }
+
+    .faq-a {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      padding-bottom: 18px;
+      display: none;
+      max-width: 520px;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 56px 48px 36px;
+      color: #fff;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 56px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-logo-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      border-radius: 7px;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 56px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      color: rgba(255,255,255,0.42);
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+
+    .footer-link:hover { color: rgba(255,255,255,0.85); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.28);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .social-icon:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .hero-bottom { left: 24px; right: 24px; }
+      .hero-partners { display: none; }
+      .two-col, .two-col.flip, .faq-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .two-col.flip { direction: ltr; }
+      .section-inner { padding: 60px 24px; }
+      .faq-wrap { padding: 60px 24px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+      .footer-links { grid-template-columns: repeat(2, 1fr); gap: 10px 32px; }
+      footer { padding: 48px 24px 28px; }
+      .social-proof { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="logo-mark">M</div>
+      meridian
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Company</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="#" class="btn btn-accent">Get Started Free</a>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>Bank today.<br>Better tomorrow.</h1>
+      <p>Unlock the power of seamless transactions and smart money management — all together.</p>
+      <a href="#" class="btn btn-accent btn-lg">Get Started Free</a>
+    </div>
+    <div class="hero-bottom">
+      <div class="trustpilot-badge">
+        <div class="tp-stars">
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+          <div class="tp-star">★</div>
+        </div>
+        <span style="opacity:.6">Trustpilot</span>
+      </div>
+      <div class="hero-partners">
+        <span class="hero-partner">mercury</span>
+        <span class="hero-partner">Anthropic</span>
+        <span class="hero-partner">yahoo!</span>
+      </div>
+      <a href="#" class="appstore-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── MARQUEE ──────────────────────────────────────────────── -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-inner" id="marquee-a"></div>
+      <div class="marquee-inner" id="marquee-b" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- ─── FEATURE 1 ────────────────────────────────────────────── -->
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="feature-text">
+        <h2>Control your money in seconds.</h2>
+        <p>Open accounts, transfer funds, and pay bills instantly — no branches, no waiting. Get more done daily with a beautifully simple interface.</p>
+        <a href="#" class="btn btn-accent">Get Started Free</a>
+      </div>
+      <div class="feature-img">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="Contactless payment" loading="lazy" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CALCULATOR SECTION ──────────────────────────────────── -->
+  <div class="section-inner" style="padding-top:0">
+    <div class="two-col flip">
+      <div class="feature-img">
+        <img src="https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?auto=format&fit=crop&w=800&q=80" alt="People enjoying time together" loading="lazy" />
+      </div>
+      <div class="calc-right">
+        <h2>Find out what your money can do</h2>
+        <p class="sub">See how much you could be saving with Meridian vs. competitors with our Savings Calculator.</p>
+        <a href="#" class="btn btn-accent">Get Started Free</a>
+        <div class="calc-card">
+          <div class="calc-row-top">
+            <span class="calc-label">Savings Balance</span>
+            <div class="toggle">
+              <button class="active" id="btn-monthly" onclick="setMode('monthly')">Monthly</button>
+              <button id="btn-yearly" onclick="setMode('yearly')">1 year</button>
+            </div>
+          </div>
+          <div class="calc-amount" id="calc-amount">$6,000</div>
+          <input type="range" class="calc-slider" id="slider" min="1000" max="100000" value="6000" step="500" oninput="updateCalc()" />
+          <div class="calc-bars" id="calc-bars"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SOCIAL PROOF ─────────────────────────────────────────── -->
+  <section class="social-proof">
+    <p class="sp-label">trusted by many</p>
+    <div class="sp-logos">
+      <span class="sp-logo">mercury</span>
+      <span class="sp-logo">Anthropic</span>
+      <span class="sp-logo">yahoo!</span>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────────── -->
+  <div class="faq-wrap">
+    <div class="faq-left">
+      <h2>Questions all resolved in one place</h2>
+      <a href="#" class="btn btn-accent">Get Started Free</a>
+    </div>
+    <ul class="faq-list">
+      <li class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is Meridian secure?
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a">Absolutely. We use bank-level 256-bit encryption and continuously monitor your accounts for suspicious activity to protect your privacy and finances at all times.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Who is Meridian for?
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a">Meridian is built for individuals and businesses who want a smarter, simpler way to manage their money — from everyday banking to savings and investments.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do you charge any hidden fees?
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a">Never. We believe in complete transparency. There are no hidden fees, no minimum balance requirements, and no surprise charges — ever.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How long does it take to set up?
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a">Most users are fully set up in under 5 minutes. Just enter your details, verify your identity, and you're ready to go.</div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I connect my existing bank accounts?
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a">Yes! Connect any major bank account to Meridian in seconds, giving you a complete view of all your finances in one place.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-top">
+      <a href="#" class="footer-logo">
+        <div class="footer-logo-mark"></div>
+        meridian
+      </a>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Company</a>
+        <a href="#" class="footer-link">Terms & Conditions</a>
+        <a href="#" class="footer-link">Resources</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Pricing</a>
+        <a href="#" class="footer-link">Jobs</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 Meridian. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" class="social-icon" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-icon" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Marquee ──────────────────────────────────────────────────
+    const ITEMS = [
+      'awardBelle', 'Weirdflow', 'Contra', 'ANNUAL',
+      'Glossier', 'Yahoo', 'awardBelle', 'Weirdflow',
+    ];
+
+    function buildMarquee(id) {
+      const el = document.getElementById(id);
+      ITEMS.forEach(name => {
+        const div = document.createElement('div');
+        div.className = 'marquee-item';
+        div.innerHTML = `<div class="marquee-icon"></div>${name}`;
+        el.appendChild(div);
+      });
+    }
+
+    buildMarquee('marquee-a');
+    buildMarquee('marquee-b');
+
+    // ── Calculator ───────────────────────────────────────────────
+    const BANKS = [
+      { name: 'meridian', apy: 5.0, color: '#141414' },
+      { name: 'ally',     apy: 4.0, color: '#2563eb' },
+      { name: 'sofi',     apy: 3.5, color: '#7c3aed' },
+      { name: 'marcus',   apy: 3.0, color: '#e848ba' },
+    ];
+
+    let mode = 'monthly';
+
+    function setMode(m) {
+      mode = m;
+      document.getElementById('btn-monthly').classList.toggle('active', m === 'monthly');
+      document.getElementById('btn-yearly').classList.toggle('active', m === 'yearly');
+      renderBars();
+    }
+
+    function updateCalc() {
+      const val = parseInt(document.getElementById('slider').value);
+      document.getElementById('calc-amount').textContent = '$' + val.toLocaleString();
+      renderBars();
+    }
+
+    function renderBars() {
+      const balance = parseInt(document.getElementById('slider').value);
+      const divisor = mode === 'monthly' ? 12 : 1;
+      const earnings = BANKS.map(b => ({ ...b, earn: (b.apy / 100 * balance) / divisor }));
+      const max = earnings[0].earn;
+
+      document.getElementById('calc-bars').innerHTML = earnings.map(b => `
+        <div>
+          <div class="bar-row">
+            <span class="bar-name">${b.name}</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${(b.earn/max*100).toFixed(1)}%; background:${b.color}"></div>
+            </div>
+            <span class="bar-earn">$${Math.round(b.earn)}</span>
+          </div>
+          <div class="bar-apy">${b.apy}%</div>
+        </div>
+      `).join('');
+    }
+
+    // ── FAQ ──────────────────────────────────────────────────────
+    function toggleFaq(el) {
+      const item = el.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    // Init
+    renderBars();
+  </script>
+</body>
+</html>
