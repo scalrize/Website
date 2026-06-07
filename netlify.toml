@@ -1,2 +1,14 @@
 [build]
   publish = "."
+
+[[redirects]]
+  from = "https://scalrize.com/*"
+  to = "https://scale-rise.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.scalrize.com/*"
+  to = "https://scale-rise.com/:splat"
+  status = 301
+  force = true
